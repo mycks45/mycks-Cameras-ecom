@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
+    
+<style>
+    body{
+        background-color: black;
+        background-size: cover;
+    }
+    .loginHeading{
+        text-align: center;
+        margin-bottom: 2rem;
+        
+    }
+    .formPosition{
+        display: block;
+        margin-right: auto;
+        width: 60%;
+        margin-top: 12rem;
+    }
+    .loginBtn{
+        margin-right: auto;
+        margin-left: 4rem;
+        width: 60%;
+        background-color: #0052CE;
+        border: none;
+        border-radius: 10px;
+    }
+    p,h1,h2{
+        font-family: 'Open Sans', sans-serif;
+    }
+    .register{
+        margin-top: 1rem;
+    }
+    .form-control{
+        background-color: #CBB9B9;
+    }
+
+
+</style>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="formPosition">
+                <div class="loginHeading">
+                    <u style="color: aliceblue;"><h2 style="color: aliceblue;">Admin Login</h2></u> 
+                </div>
+                <form method="POST" action="{% url 'login_admin' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="admin" id="exampleInputEmail1" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                      
+                      <input type="password" class="form-control" name="pwd" id="exampleInputPassword1" placeholder="Password" required>
+                        
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary loginBtn">Login</button>
+                    
+                  </form>
+                  
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+    
+    
+</head>
+<body>
+
+
+    
+</body>
+</html>

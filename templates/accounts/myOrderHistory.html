@@ -1,0 +1,105 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y bg">
+
+<div class="container">
+	<div class="row">
+	
+    {% include 'includes/profile_sidebar.html' %}
+
+	<main class="col-md-9">
+		<article class="card">
+		<header class="card-header">
+			<strong class="d-inline-block mr-3">Your Order History:</strong>
+			
+		</header>
+		<div class="card-body">
+			<div class="row"> 
+
+				<div class="col-md-12">
+                    {% comment %} <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order #</th>
+                                <th scope="col">Billing Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Order total</th>
+                                <th scope="col">Date</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for order1 in orders %}
+                            <tr>
+                            
+                                <th scope="row"> <a href="{% url 'user_order_details' order1.order_number %}">{{ order1.order_number }}</a> </th>
+                                <td>{{ order1.user.first_name }} {{ order1.user.last_name }}</td>
+                                <td>{{ order1.status }}</td>
+                                <td>{{ order1.order_total }}</td>
+                                <td>{{ order1.created_at }}</td>
+                                <td>
+                                 <button class="btn btn-dark"   onclick="return confirm ('are you sure, you want to Cancel this order {{ order1.id }}') ? window.location.href='{% url 'user_delete_order' order1.order_number %}' : ''  "  > Cancel </button>
+                                </td>
+
+                            </tr>
+                         {% endfor %} 
+                        </tbody>
+                    </table> {% endcomment %}
+                     <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">order ID</th>
+                        
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Status</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        
+					
+                      <tr>
+                        <th scope="row"><a href="{% url 'user_order_details' order.order.order_number %}">{{ order.order.order_number }}</a></th>
+                        <td>{{ order.product.product_name }}</td>
+                        <td>{{ order.product_price }} </td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.created_at }}</td>
+                        <td> {{ order.order.status }} </td>		
+                      </tr>
+                      
+                      {% endfor %} 
+                      
+                    </tbody>
+                  </table>
+					
+				</div>
+				
+
+			</div> <!-- row.// -->
+		</div> <!-- card-body .// -->
+
+		</article> <!-- order-group.// --> 
+	</main>
+</div> <!-- row.// -->
+</div>
+
+
+</section>
+
+
+
+
+
+
+{% endblock %}

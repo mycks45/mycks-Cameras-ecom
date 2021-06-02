@@ -1,0 +1,290 @@
+{% extends 'adminPanel/baseAdmin.html' %}
+
+
+{% block content %}
+{% comment %} --------------------------------------------------------------------- {% endcomment %}
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-4 col-md-6 col-sm-6">
+				<div class="card card-stats">
+					<div class="card-header card-header-warning card-header-icon">
+						<div class="card-icon">
+							<i class="material-icons">content_copy</i>
+						</div>
+						<p class="card-category">Total Users</p>
+						<h3 class="card-title">{{userCount}}
+
+						</h3>
+					</div>
+					<div class="card-footer">
+						<div class="stats">
+							<i class="material-icons">date_range</i> New User:
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-6">
+				<div class="card card-stats">
+					<div class="card-header card-header-success card-header-icon">
+						<div class="card-icon">
+							<i class="material-icons">store</i>
+						</div>
+						<p class="card-category">Revenue</p>
+						<h3 class="card-title">{{sales}}</h3>
+					</div>
+					<div class="card-footer">
+						<div class="stats">
+							<i class="material-icons">date_range</i>IN Last 24 Hours: {{salesToday}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-6">
+				<div class="card card-stats">
+					<div class="card-header card-header-purple card-header-icon">
+						<div class="card-icon">
+							<i class="material-icons">library_books</i>
+						</div>
+						<p class="card-category">Total Order</p>
+						<h3 class="card-title">{{orderCount}}</h3>
+					</div>
+					<div class="card-footer">
+						<div class="stats">
+							<i class="material-icons">date_range</i> IN Last 24 Hours: {{orderToday}}
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+</div>
+
+<div class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-6 col-md-4">
+				<div class="card card-stats card-primary card-round">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-5">
+								<div class="icon-big text-center">
+									<i class="flaticon-users"></i>
+								</div>
+							</div>
+							<div class="col-7 col-stats">
+								<div class="numbers">
+									<p class="card-category">Sales in this Year</p>
+									<h4 class="card-title">{{salesThisYear}} </h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-6 col-md-4">
+				<div class="card card-stats card-success card-round">
+					<div class="card-body ">
+						<div class="row">
+							<div class="col-5">
+								<div class="icon-big text-center">
+									<i class="bi bi-arrow-down-circle-fill"></i>
+								</div>
+							</div>
+							<div class="col-7 col-stats">
+								<div class="numbers">
+									<p class="card-category">Sales in the Month</p>
+									<h4 class="card-title"> {{salesThisMonth}}</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-4">
+				<div class="card card-stats card-secondary card-round">
+					<div class="card-body ">
+						<div class="row">
+							<div class="col-5">
+								<div class="icon-big text-center">
+									<i class="flaticon-success"></i>
+								</div>
+							</div>
+							<div class="col-7 col-stats">
+								<div class="numbers">
+									<p class="card-category">Sales Today</p>
+									{% if saleToday is none %}
+									<h4 class="card-title">NO SALES</h4>
+									{% else %}
+									<h4 class="card-title">{{salesToday}}</h4>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 col-md-3">
+				<div class="card card-stats card-primary card-round">
+					<div class="card-body">
+						<div class="numbers">
+							<p class="card-category">Accepted Order</p>
+							<h4 class="card-title">{{orderStatusAccepted}} </h4>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="card card-stats card-primary card-round">
+					<div class="card-body">
+						<div class="numbers">
+							<p class="card-category">Shipped Order</p>
+							<h4 class="card-title">{{orderStatusShipped}} </h4>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="card card-stats card-primary card-round">
+					<div class="card-body">
+						<div class="numbers">
+							<p class="card-category">orders Completed</p>
+							<h4 class="card-title">{{orderStatusCompleted}} </h4>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="card card-stats card-primary card-round">
+					<div class="card-body">
+						<div class="numbers">
+							<p class="card-category">Cancelled Orders</p>
+							<h4 class="card-title">{{orderStatusCancelled}} </h4>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="row mt-2">
+
+	<div id="piechart" style="width: 50%; height: 350px;"></div>
+	<div id="donutchart" style="width: 50%; height: 350px;"></div>
+</div>
+
+
+
+<div class="row mt-1">
+	<div class="col-sm-6 col-md-12">
+		<div class="card card-stats card-primary card-round">
+			<div class="card-body">
+				<div class="numbers">
+					<div class="card-header card-header-warning mb-3">
+						<h4 class="card-title">Sale Report</h4>
+
+					</div>
+					<form action="{% url 'sales_report' %} " method="GET">
+						{% csrf_token %}
+						<div class="col">
+							<label for="startdate">From:</label>
+							<input type="date" name="startdate" class="form-control">
+
+							<label for="enddate">To:</label>
+							<input type="date" name="enddate" class="form-control">
+						</div>
+						<button type="submit" class="btn btn-primary">sumit</button>
+					</form>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</main>
+</div> <!-- row.// -->
+</div>
+
+
+</section>
+{% comment %} --------------------------------------------------------------------- {% endcomment %}
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	var camCount = "{{ camCount }}"
+	var lensCount = "{{ lensCount }}"
+	var accessoriesCount = "{{ accessoriesCount }}"
+	var lensCount = "{{ flashCount }}"
+	google.charts.load("current", {
+		packages: ["corechart"]
+	});
+	google.charts.setOnLoadCallback(drawChart);
+
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+			['Task', 'Hours per Day'],
+			['Cameras', {{camCount}}],
+			['Lens', {{lensCount}}],
+			['Flash', {{flashCount}}],
+			['Accessories', {{accessoriesCount}}],
+
+		]);
+
+		var options = {
+			title: 'Products in store',
+			pieHole: 0.4,
+		};
+
+		var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+		chart.draw(data, options);
+	}
+</script>
+
+<script type="text/javascript">
+	google.charts.load('current', {
+		'packages': ['corechart']
+	});
+	google.charts.setOnLoadCallback(drawChart);
+
+	function drawChart() {
+
+		var data = google.visualization.arrayToDataTable([
+			['Task', 'Hours per Day'],
+			['COD', {{codCount}}],
+			['paypal', {{payCount}}],
+			['Razorpay', {{razCount}}],
+		]);
+
+		var options = {
+			title: 'Payment method used'
+		};
+
+		var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+		chart.draw(data, options);
+	}
+</script>
+
+
+
+
+
+{% endblock %}

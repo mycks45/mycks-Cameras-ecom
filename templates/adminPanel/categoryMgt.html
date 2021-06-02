@@ -1,0 +1,57 @@
+{% extends 'adminPanel/baseAdmin.html' %}
+
+
+{% block content %}
+
+
+
+      <main class="col-md-12">
+        <article class="card">
+        <header class="card-header">
+      <div class="d-flex justify-content-end"><a class="btn btn-warning" href="{% url 'add_category' %}" role="button">Add Category</a></div>
+			<strong class="d-inline-block mr-3">category Information</strong>
+			
+		</header>
+          
+          <div class="card-body">
+            <div class="row">
+          <table class="table table-hover">
+  <thead>
+    <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Category Name</th>
+          <th scope="col">Slug</th>
+          <th scope="col">image</th>
+          <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories %}
+        <tr>
+          <th scope="row">{{ category.id }}</th>
+          <td>{{ category.category_name }}</td>
+          <td>{{ category.slug }}</td>
+          <td>{{ category.cat_image }}</td>
+          <td><a href="" class="delete"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a></td>
+        </tr>
+        {% endfor %}
+
+    
+  </tbody>
+</table>
+              
+              
+
+            </div> <!-- row.// -->
+          </div> <!-- card-body .// -->
+
+        </article> <!-- order-group.// -->
+      </main>
+    </div> <!-- row.// -->
+  </div>
+
+
+</section>
+{% comment %} --------------------------------------------------------------------- {% endcomment %}
+
+{% endblock %}

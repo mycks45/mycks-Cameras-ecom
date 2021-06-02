@@ -1,0 +1,104 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y bg">
+
+<div class="container">
+	<div class="row">
+	
+    {% include 'includes/profile_sidebar.html' %}
+
+	<main class="col-md-9">
+		<article class="card">
+		<header class="card-header">
+			<strong class="d-inline-block mr-3">Logged in Email:</strong>
+			<span>{{ user.email }}</span>
+		</header>
+		<div class="card-body">
+			{% include 'includes/alerts.html' %}
+			<div class="row">
+				
+				<div class="col-md-6">
+					<div class="card" style="text-align:center;" >
+						<div class="card-body">
+						
+						{% if user.profile_picture %}
+							<img src="{{ user.profile_picture.url }}" alt="User Profile Picture" width="50" height="50" style="border-radius:50%" >
+							{% else %}
+							<img src="https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg" alt="User Profile Picture" width="50" height="50" style="border-radius:50%" >
+		
+							{% endif %}
+							<p class="mb-0">{{ user.username }}</p>
+							<p class="mb-0">{{ user.email }}</p>
+							<p class="mb-0">{{ user.phone_number }}</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card" style="text-align:center;" >
+						<div class="card-body">
+							<h5 class="card-title">Total Orders</h5>
+							<h4> {{ order_count }} </h4>
+							<a href="{% url 'my_order' %}">View Order</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="card" style="text-align:center;" >
+						<div class="card-body">
+							<h5 class="card-title">Referral Code</h5>
+							<input type="text" class="form-control" value="{{ ref_code }}" readonly>
+							<p>You Recommended {{ ref_count }} person </p>
+							<form action="{% url 'profile' %}" method="POST">
+								{% csrf_token %}
+								<button class="btn btn-dark" type="submit">Redeem</button>
+							</form>
+						
+						</div>
+					</div>
+				</div>
+				
+
+			</div> 
+			<h3>Address</h3>
+			{% for profile in userprofile %}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card" style="" >
+						<div class="card-body">
+							<p class="mb-0">{{ user.username }}</p>
+							<p class="mb-0">{{ user.email }}</p>
+							<p class="mb-0">{{ user.phone_number }}</p>
+							<p class="mb-0">{{ profile.full_address }}</p>
+							<p class="mb-0">{{ profile.pin_code }}</p>
+							<p class="mb-0">{{ profile.city }}, {{ profile.state }}, {{ profile.country }}</p>
+							<button class="delete btn btn-danger mt-2"   onclick="return confirm ('are you sure, you want to delete this') ? window.location.href='{% url 'address_delete' profile.id %}' : ''  ">delete</button>
+							<a href="{% url 'address_update' profile.id %}" class="btn btn-primary mt-2">Update</a>	
+						</div>
+					</div>
+				</div>
+			</div><!-- row.// -->
+			{% endfor %}
+		</div> <!-- card-body .// -->
+		<a href="{% url 'add_address' %} " class="btn btn-primary">Add New Address</a>
+		</article> <!-- order-group.// --> 
+	</main>
+</div> <!-- row.// -->
+</div>
+
+
+</section>
+
+
+
+
+
+
+{% endblock %}

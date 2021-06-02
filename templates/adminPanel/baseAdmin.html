@@ -1,0 +1,143 @@
+
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  
+    <title>Mycks Cameras admin_panel</title>
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'images/icons/M black.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/icons/M black.png' %}">
+    <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <!-- Material Kit CSS -->
+  <!-- <link href="assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" /> -->
+  <link href="{% static 'css/material-dashboard.css' %}" rel="stylesheet" />
+
+  
+</head>
+
+<body>
+  <div class="wrapper ">
+    <div class="sidebar" data-color="orange" data-background-color="white">
+      <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+      <div class="logo">
+        <a href="" class="simple-text logo-mini">
+          Mycks45 Cameras
+        </a>
+        
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+            <!-- your sidebar here -->
+
+
+          <li class="nav-item active  "><a class="nav-link" href="{% url 'admin_panel' %}"><i class="material-icons">dashboard</i><p>Dashboard</p></a></li>
+          <li class="nav-item {% if '/user_mgt/' in request.path %}active{% endif %} "><a class="nav-link btn" href="{% url 'user_mgt' %}"> User mgt </a></li>
+          <li class="nav-item {% if '/order_mgt/' in request.path %}active{% endif %} "><a class="nav-link btn" href="{% url 'order_mgt' %}"> Order mgt </a></li>
+          <li class="nav-item {% if '/product_mgt/' in request.path %}active{% endif %} "><a class="nav-link btn" href="{% url 'product_mgt' %}"> products </a></li>
+          <li class="nav-item {% if '/category_mgt/' in request.path %}active{% endif %} "><a class="nav-link btn" href="{% url 'category_mgt' %}"> category_mgt </a></li>
+          <li class="nav-item {% if '/coupons_mgt/' in request.path %}active{% endif %}  "><a class="nav-link btn" href="{% url 'coupons_mgt' %}"> coupons/offer </a></li>
+          <li class="nav-item  "><a class="nav-link" href="{% url 'logout_admin' %}"><i class="fa fa-power-off"></i> <span class="text">Log out</span> </a></li>
+           
+
+
+          
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <a class="navbar-brand" href="">
+              {% if '/user_mgt/' in request.path %}User Management  
+              {% elif '/order_mgt/' in request.path %}Order Management 
+              {% elif '/product_mgt/' in request.path %}Product Management 
+              {% elif '/category_mgt/' in request.path %}Category Management 
+              {% elif '/coupons_mgt/' in request.path %}Coupons and Offers Management 
+              {% elif '/add_category/' in request.path %}Create New Category 
+              {% elif '/coupons_add/' in request.path %}Create New Coupons
+              {% elif '/add_category_offer/' in request.path %}Create or Updated Category Offers 
+              {% elif '/add_product/' in request.path %} Create New Product
+              {% elif '/update_product/' in request.path %}Update Existing Product
+              {% elif '/order_detail/' in request.path %}Order Details
+              {% elif '/referrence_stats/' in request.path %}User Details
+              {%else%}Dashboard
+              {% endif %}</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:;">
+                  <i class="material-icons">notifications</i> Notifications
+                </a>
+              </li>
+              <!-- your navbar here -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+
+        
+    {% block content %}
+    
+    <!-- content -->
+    
+    {% endblock %}
+    
+
+<footer class="footer">
+  <div class="container-fluid">
+    <nav class="float-left">
+      <ul>
+        <li>
+          <a href="">
+            Mycks45
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="copyright float-right">
+      &copy;
+      <script>
+        document.write(new Date().getFullYear())
+      </script>, made with <i class="material-icons">favorite</i> by
+      <a href="" target="_blank">Mycks45</a> for a better web.
+    </div>
+    <!-- your footer here -->
+  </div>
+</footer>
+</div>
+</div>
+
+
+
+</body>
+
+</html>

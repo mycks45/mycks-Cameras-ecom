@@ -1,0 +1,33 @@
+
+<style>
+.sidebar {
+width: 200px;
+position: -webkit-sticky; /* for Safari users */
+position: sticky;
+margin-top: none;
+padding-top: 40px;
+background-color: #1F2431;
+}
+
+
+
+</style>
+
+
+<div class="row">
+<aside class="sidebar">
+		<!--   SIDEBAR   -->
+		<ul class="list-group">
+			<a class="btn btn-dark p-3" href="{% url 'admin_panel' %}"> Dashbroad </a>
+			<a class="list-group-item {% if '/user_mgt/' in request.path %}active{% endif %} " href="{% url 'user_mgt' %}"> User mgt </a>
+			<a class="list-group-item {% if '/order_mgt/' in request.path %}active{% endif %}" href="{% url 'order_mgt' %}"> Order mgt </a>
+			<a class="list-group-item {% if '/product_mgt/' in request.path %}active{% endif %}" href="{% url 'product_mgt' %}"> products </a>
+			<a class="list-group-item {% if '/category_mgt/' in request.path %}active{% endif %}" href="{% url 'category_mgt' %}"> category_mgt </a>
+			<a class="list-group-item {% if '/coupons_mgt/' in request.path %}active{% endif %}" href="{% url 'coupons_mgt' %}"> coupons/offer </a>
+
+			
+		</ul>
+		<br>
+		<a class="btn btn-light btn-block" href="{% url 'logout_admin' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a> 
+		<!--   SIDEBAR .//END   -->
+	</aside> 

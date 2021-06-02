@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y " style="min-height:84vh">
+
+    <div class="container d-flex justify-content-center">
+
+        <!-- ============================ COMPONENT 1 ================================= -->
+
+
+
+
+        <div class="row">
+            <aside class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4"> Add New Address </h4>
+
+                        <form action="{% url 'add_address' %}" method="POST">
+
+                            {% csrf_token %}
+                            
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for=""> Address Line 1 </label>
+                                    <input type="text" name="address_line_1" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for=""> Address Line 2 </label>
+                                    <input type="text" name="address_line_2" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for=""> PIN code </label>
+                                    <input type="number" maxlength="6" name="pin_code" class="form-control" required>
+                                </div>
+                                <div class="col form-group">
+                                    <label for=""> City </label>
+                                    <input type="text" name="city" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for=""> State </label>
+                                    <input type="text" name="state" class="form-control" required>
+                                </div>
+                                <div class="col form-group">
+                                    <label for=""> Country </label>
+                                    {% comment %} <input type="text" name="country" class="form-control" required>
+                                    {% endcomment %}
+
+                                    <select class="form-control" id="exampleFormControlSelect1" name="country">
+                                        <option>India</option>
+                                        <option>China</option>
+                                        <option>USA</option>
+                                        <option>UAE</option>
+                                        <option>Japan</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <button type="submit" name="submit" class="btn btn-primary btn-block"> Submit </button>
+                        </form>
+
+                    </div>
+                </div> <!-- card.// -->
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+{% endblock %}

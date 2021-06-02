@@ -1,0 +1,170 @@
+{% extends 'adminPanel/baseAdmin.html' %}
+
+
+{% block content %}
+
+
+<!-- your content here -->
+<main class="col-md-12">
+  <article class="card">
+    <header class="card-header">
+      <strong class="d-inline-block">User Information</strong>
+
+      <div class="col-md-3">
+        <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for user">
+      </div>
+
+    </header>
+
+    <div class="card-body">
+      <div class="row">
+        <table id="myTable" class="table table-hover">
+          <thead>
+            <tr class="header">
+              <th scope="col">User ID</th>
+              <th onclick="sortTable(0)" scope="col">First Name</th>
+              <th onclick="sortTable(1)" scope="col">Last Name</th>
+              <th onclick="sortTable(2)" scope="col">Username</th>
+              <th onclick="sortTable(3)" scope="col">Email</th>
+              <th onclick="sortTable(4)" scope="col">Phone Number</th>
+              <th onclick="sortTable(5)" scope="col">Status</th>
+              <th scope="col">Block</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for customer in customers %}
+            {% if not customer.is_admin %}
+            <tr>
+              <th scope="row">{{customer.id}}</th>
+              <td>{{customer.first_name}}</td>
+              <td>{{customer.last_name}}</td>
+              <td><a href="{% url 'referrence_stats' customer.id %}">{{customer.username}}</a></td>
+              <td>{{customer.email}}</td>
+              <td>{{customer.phone_number}}</td>
+              <td>
+                {% if customer.is_active %}
+                <p> <b>Active</b> </p>
+                {% else %}
+                <p style="color: red;"> <b>Blocked</b> </p>
+                {% endif %}
+
+              </td>
+              <td>
+                <button class="delete" style="background: none; border: none; "
+                  onclick="return confirm ('are you sure, you want to block {{customer.username}}') ? window.location.href='{% url 'block_user' customer.id %}' : ''  ">
+                  <i {% if customer.is_active %}{% else %} style="color: red;"{% endif %} class="material-icons">info_outline</i></button>
+              </td>
+              <td>
+                <button class="delete" style="background: none; border: none; "
+                  onclick="return confirm ('are you sure, you want to delete {{customer.username}}') ? window.location.href='{% url 'delete_user' customer.id %}': ''  ">
+                  <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>
+              </td>
+
+
+
+            </tr>
+            {% endif %}
+            {% endfor %}
+
+
+          </tbody>
+        </table>
+
+
+
+      </div> <!-- row.// -->
+    </div> <!-- card-body .// -->
+
+  </article> <!-- order-group.// -->
+</main>
+</div> <!-- row.// -->
+
+
+
+
+<!-- search  -->
+<script>
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+
+  }
+</script>
+<!-- sort on th -->
+
+<script>
+  function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+</script>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'adminPanel/baseAdmin.html' %}
+
+
+{% block content %}
+
+
+
+<div class="container">
+    <div>
+        <div class="text-center">
+            <h5 ><b>category Information</b></h5>
+        </div>
+        <hr>
+        <hr>
+                <form method="POST" action="{% url 'add_category_offer' %}">
+
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" style="color: black;">Name of the Offer</label>
+                        {{form.offer_name}}
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" style="color: black;">Select the category</label>
+                        {{form.category}}
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" style="color: black;">Discount in percentage</label>
+                        {{form.offer_discount}}
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" style="color: black;">valid_from</label>
+                        {{form.cat_valid_from}}
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" style="color: black;">valid_to</label>
+                        {{form.cat_valid_to}}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-warning">Add</button>
+                  </form>
+            </div>
+            <div class="container">
+                
+            </div>
+        </div>
+        
+    </div>
+    
+    
+</div>
+
+{% endblock %}
+    

@@ -1,0 +1,137 @@
+{% extends 'adminPanel/baseAdmin.html' %}
+
+
+{% block content %}
+
+
+
+	
+
+      <main class="col-md-12">
+        <article class="card">
+        <header class="card-header">
+          <div class="row" >
+      <div class=""><a class="btn btn-warning" href="{% url 'coupons_add' %}" role="button">Create Coupons</a></div>
+      
+    </div>
+      <strong class="d-inline-block mr-3">Coupons</strong>
+			
+		</header>
+          
+          <div class="card-body">
+            <div class="row">
+          <table class="table table-hover">
+  <thead>
+    <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Coupon code</th>
+          <th scope="col">Valid from</th>
+          <th scope="col">Valid to</th>
+          <th scope="col">Discount amount</th>
+          <th scope="col">Current status</th>
+          <th scope="col">Status</th>
+          <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for coupon in coupons %}
+        <tr>
+          <th scope="row">{{ coupon.id }}</th>
+          <td>{{ coupon.code }}</td>
+          <td>{{ coupon.valid_from }}</td>
+          <td>{{ coupon.valid_to }}</td>
+          <td>{{ coupon.discount }}</td>
+          {% if coupon.active %}
+          <td>active</td>
+          {% else %}
+          <td style="color: red;">deactive</td>
+          {% endif %}
+          <td>
+            <button class="delete" style="background: none; border: none; " onclick="return confirm ('are you sure, you want to {% if coupon.active %} deactivate {% else %} activate {% endif %} {{coupon.code}}') ? window.location.href='{% url 'coupon_status' coupon.id %}' : ''  " > <i class="bi bi-stop-circle">deactivate</i></button>
+          </td>
+          <td>
+            <button class="delete" style="background: none; border: none; " onclick="return confirm ('are you sure, you want to delete order {{ coupon.code }}') ? window.location.href='{% url 'delete_coupon' coupon.id %}' : ''  " > <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>
+          </td>
+        </tr>
+        {% endfor %}
+
+    
+  </tbody>
+</table>
+              
+              
+
+            </div> <!-- row.// -->
+          </div> <!-- card-body .// -->
+
+        </article> <!-- order-group.// -->
+      </main>
+
+
+
+      <main class="col-md-12 mt-4">
+        <article class="card">
+          <header class="card-header">
+            <div class="d-flex"><a class="btn btn-warning" href="{% url 'add_category_offer' %}" role="button">Create/Update Category offer</a></div>
+            <strong class="d-inline-block mr-3">Category offers</strong>
+			
+		</header>
+          
+          <div class="card-body">
+            <div class="row">
+          <table class="table table-hover">
+  <thead>
+    <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Offer Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">Valid from</th>
+          <th scope="col">Valid to</th>
+          <th scope="col">Discount amount</th>
+          <th scope="col">Current status</th>
+          <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cat in cat_offers %}
+        <tr>
+          <th scope="row">{{ cat.id }}</th>
+          <td>{{ cat.offer_name }}</td>
+          <td>{{ cat.category }}</td>
+          <td>{{ cat.cat_valid_from }}</td>
+          <td>{{ cat.cat_valid_to }}</td>
+          <td>{{ cat.offer_discount }}</td>
+          {% if cat.is_active %}
+          <td><a href="{% url 'activate_cat_offer' cat.id %}">Deactivate</a></td>
+          {% else %}
+          <td style="color: red;"><a href="{% url 'activate_cat_offer' cat.id %}">Activate</a></td>
+          {% endif %}
+          <td>
+            <button class="delete" style="background: none; border: none; " onclick="return confirm ('are you sure, you want to delete category offer on {{ cat.category }}') ? window.location.href='{% url 'delete_category_offer' cat.id %}' : ''  " > <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>
+          </td>
+        </tr>
+        {% endfor %}
+
+    
+  </tbody>
+</table>
+              
+              
+
+            </div> <!-- row.// -->
+          </div> <!-- card-body .// -->
+
+        </article> <!-- order-group.// -->
+      </main>
+    </div> <!-- row.// -->
+  </div>
+
+
+</section>
+{% comment %} --------------------------------------------------------------------- {% endcomment %}
+
+
+
+
+
+{% endblock %}

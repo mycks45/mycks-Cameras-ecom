@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y " style="min-height:84vh">
+
+    <div class="container d-flex justify-content-center">
+
+        <!-- ============================ COMPONENT 1 ================================= -->
+
+
+
+
+        <div class="row">
+            <aside class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4"> Add New Address </h4>
+
+                        <form action="" method="POST">
+
+                            {% csrf_token %}
+                            
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for=""> Address Line 1 </label>
+                                    {{form.address_line_1}}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for=""> Address Line 2 </label>
+                                    {{form.address_line_2}}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for=""> PIN code </label>
+                                    {{form.pin_code}}
+                                </div>
+                                <div class="col form-group">
+                                    <label for=""> City </label>
+                                    {{form.city}}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for=""> State </label>
+                                    {{form.state}}
+                                </div>
+                                <div class="col form-group">
+                                    <label for=""> Country </label>
+                                    {{form.country}}
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn btn-warning">Update</button>
+                        </form>
+
+                    </div>
+                </div> <!-- card.// -->
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+{% endblock %}

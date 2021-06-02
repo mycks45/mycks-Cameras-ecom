@@ -1,0 +1,205 @@
+{% extends 'adminPanel/baseAdmin.html'%}
+
+
+{% block content %}
+
+<style>
+  button:hover {
+    color: red;
+    background: red;
+  }
+</style> 
+
+	
+
+      <main class="col-md-12">
+        <article class="card">
+          <header class="card-header">
+            <div class="d-flex justify-content-end"><a class="btn btn-warning" href="{% url 'add_product' %}"
+                role="button">Add product</a></div><strong class="d-inline-block mr-3">Product Information</strong>
+
+                <div class="col-md-3">
+                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for name">
+                </div>
+          </header>
+          <div class="card-body">
+            <div class="row">
+              <table id="myTable" class="table table-hover">
+                <thead>
+                  <tr class="header">
+                    <th scope="col">Product ID</th>
+                    <th onclick="sortTable(0)" scope="col">Product Name</th>
+                    <th scope="col">Product image</th>
+                    <th scope="col">Price</th>
+                    <th onclick="sortTable(3)" scope="col">Stock</th>
+                    <th  scope="col">Is available</th>
+                    <th scope="col">Offer</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 {% for product in products %}
+
+
+                  <tr>
+                  
+                    <th scope="row">{{product.id}}</th>
+                    <td>{{product.product_name}}</td>
+                    <td><img style="width: 10rem; height: 7rem; " src="{{ product.Images.url }}" alt=""></td>
+                    <td>{{product.price}} </td>
+                    <td> {{product.stock}}</td>
+                    <td> 
+                    {% if product.is_available %}
+
+                      <p><b>available</b></p> 
+                      {% else %}
+
+                      <p style="color: red;"><b>Out of stock</b></p> 
+                      {% endif %}
+
+                    </td>
+                    <td> 
+                    {% if product.offer_active %}
+
+                      <p><b>{{product.offer_discount}}%</b></p> 
+                      {% else %}
+
+                      <p style="color: red;"><b>No</b></p> 
+                      {% endif %}
+
+                    </td>
+                    <td><a href="{% url 'update_product' product.id %}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a></td>
+                    <td><button class="delete" style="background: none; border: none; "  onclick="return confirm ('are you sure, you want to block {{customer.username}}') ? window.location.href='{% url 'delete_product' product.id %}' : ''  "><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872; </i></button></td>
+                  </tr> {% endfor %}
+
+
+                </tbody>
+              </table>
+            </div>
+           
+          </div>
+          
+
+        </article>
+        <nav class="mt-4" aria-label="Page navigation sample">
+
+    {% if products.has_other_pages %}
+
+      <ul class="pagination">
+        {% if products.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a></li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+        {% endif %}
+
+        {% for i in products.paginator.page_range %}
+            {% if products.number == i %}
+        <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+            {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if products.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+        {% endif %}
+      </ul>
+      
+      {% endif %}
+    </nav>
+        
+      </main>
+    </div>
+   
+
+  </div>
+  {% comment %}--------------------------------------------------------------------- {% endcomment %}
+  <script>
+   function sortTable(n) {
+     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+     table = document.getElementById("myTable");
+     switching = true;
+     // Set the sorting direction to ascending:
+     dir = "asc";
+     /* Make a loop that will continue until
+     no switching has been done: */
+     while (switching) {
+       // Start by saying: no switching is done:
+       switching = false;
+       rows = table.rows;
+       /* Loop through all table rows (except the
+       first, which contains table headers): */
+       for (i = 1; i < (rows.length - 1); i++) {
+         // Start by saying there should be no switching:
+         shouldSwitch = false;
+         /* Get the two elements you want to compare,
+         one from current row and one from the next: */
+         x = rows[i].getElementsByTagName("TD")[n];
+         y = rows[i + 1].getElementsByTagName("TD")[n];
+         /* Check if the two rows should switch place,
+         based on the direction, asc or desc: */
+         if (dir == "asc") {
+           if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+             // If so, mark as a switch and break the loop:
+             shouldSwitch = true;
+             break;
+           }
+         } else if (dir == "desc") {
+           if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+             // If so, mark as a switch and break the loop:
+             shouldSwitch = true;
+             break;
+           }
+         }
+       }
+       if (shouldSwitch) {
+         /* If a switch has been marked, make the switch
+         and mark that a switch has been done: */
+         rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+         switching = true;
+         // Each time a switch is done, increase this count by 1:
+         switchcount ++;
+       } else {
+         /* If no switching has been done AND the direction is "asc",
+         set the direction to "desc" and run the while loop again. */
+         if (switchcount == 0 && dir == "asc") {
+           dir = "desc";
+           switching = true;
+         }
+       }
+     }
+   }
+   </script>
+<!-- search -->
+   <script>
+    function myFunction() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+    
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+      
+    }
+    </script>
+</section>
+
+
+
+{% endblock %}
